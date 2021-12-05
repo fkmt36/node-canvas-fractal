@@ -100,17 +100,17 @@ export function drawGumowskiMira(a = 0.009, s = 0.05, m = -0.801) {
   for (let y = 0; y < imageData.height; y++) {
     for (let x = 0; x < imageData.width; x++) {
       // if ((x-imageData.width/2)**2 + (y-imageData.height/2)**2 < (imageData.width/2)**2)
-        point(imageData, x, y, 0x00, 0x00, 0x00, 0xFF)
+        point(imageData, x, y, 0x0A, 0x00, 0x17, 0xFF)
     }
   }
 
-  for (let i = 0, x = 0.1, y = 0.1; i < 250000; i++) {
+  for (let i = 0, x = 0.1, y = 0.1; i < 500000; i++) {
     const _x = y + a*y*(1-s*y*y) + m*x + ((2*(1-m)*x*x)/(1+x*x))
     const _y = -1*x + m*_x + ((2*(1-m)*_x*_x)/(1*_x*_x))
     point(
       imageData,
       Math.floor(_x * 34 + imageData.width*0.43),
-      Math.floor(_y * 50 + imageData.height*0.5),
+      Math.floor(_y * 56 + imageData.height*0.5),
       0xFF,
       0xFF,
       0xFF,
@@ -121,12 +121,14 @@ export function drawGumowskiMira(a = 0.009, s = 0.05, m = -0.801) {
 
   for (let y = 0; y < imageData.height; y++) {
     for (let x = 0; x < imageData.width; x++) {
-      if ((getPixel(imageData,x,y)[0] == 0xFF))
-        point(imageData, x, y, ...HSVtoRGB(Math.floor(y/3)/360, 1, 1), 0xFF)
+      if ((getPixel(imageData,x,y)[0] == 0xFF)) {
+        point(imageData, x, y, ...HSVtoRGB(Math.floor(((x-imageData.width/2)**2 + (y-imageData.height/2)**2)/((512/360)**2))/(360**2), 1, 1), 0xFF)
+      }
+       
     }
   }
-  
+
   ctx.putImageData(imageData, 0, 0)
-  
+
   return canvas.toBuffer('image/png')
 }
