@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+if type "docker" > /dev/null 2>&1; then
+    cd `dirname $0`
+    docker image build -t fractal ..
+    docker container run -it --rm fractal
+    exit 0
+else
+    echo "dockerコマンドがありません"
+    exit 1
+fi
