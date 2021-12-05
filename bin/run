@@ -3,7 +3,7 @@
 if type "docker" > /dev/null 2>&1; then
     cd `dirname $0`
     docker image build -t fractal ..
-    docker container run -it --rm fractal
+    docker container run -it -p 3000:3000 --rm fractal
     exit 0
 else
     echo "dockerコマンドがありません"
